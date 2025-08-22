@@ -26,3 +26,8 @@ Perfect for sharing posts, projects, or personal experiences. ✨
 | 🧹 **ESLint** | Code Quality |
 
 ---
+
+📧 Contact
+
+👤 Himanshi Sharma
+📩 Email: your-himanshsharma7890@gmail.com
