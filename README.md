@@ -30,4 +30,4 @@ Perfect for sharing posts, projects, or personal experiences. ✨
 📧 Contact
 
 👤 Himanshi Sharma
-📩 Email: your-himanshsharma7890@gmail.com
+📩 Email: himanshsharma7890@gmail.com
