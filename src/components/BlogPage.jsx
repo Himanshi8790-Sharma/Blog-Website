@@ -5,6 +5,7 @@ import CategorySelection from './CategorySelection';
 import SideBar from './SideBar';
 
 function BlogPage() {
+    const [allBlogs, setAllBlogs] = useState([]);
     const [blog,setBlog] = useState([]);
     const [totalBlogs, setTotalBlogs] = useState(0);
     const [currentPage, setCurrentPage]= useState(1);
@@ -12,42 +13,39 @@ function BlogPage() {
     const [selectedCategory,setSelectedCategory]= useState(null);
     const [activeCategory,setactiveCategory]=useState(null);
 
-   useEffect(() => {
-  async function fetchBlogs() {
-    try {
-      const response = await fetch('/blogsData.json');
-      if (!response.ok) throw new Error('File not found');
-      
-      const data = await response.json();
-
-      // Filter by category
-      let filteredData = selectedCategory
-        ? data.filter(blog => blog.category === selectedCategory)
-        : data;
-
-      // Set total blogs count for pagination
-      setTotalBlogs(filteredData.length);
-        
-      // Pagination
-      const startIndex = (currentPage - 1) * pageSize;
-      const paginatedData = filteredData.slice(startIndex, startIndex + pageSize);
-
-      setBlog(paginatedData);
-    } catch (error) {
-      console.error('Error fetching blogs:', error);
+  
+  // Fetch once when page loads
+  useEffect(() => {
+    async function fetchBlogs() {
+      try {
+        const response = await fetch('/blogsData.json');
+        if (!response.ok) throw new Error('File not found');
+        const data = await response.json();
+        setAllBlogs(data); // store original blogs for filtering & pagination
+      } catch (error) {
+        console.error('Error fetching blogs:', error);
+      }
     }
-  }
+    fetchBlogs();
+  }, []);
 
-  fetchBlogs();
-}, [currentPage, pageSize, selectedCategory]);
+    // Handle filtering + pagination dynamically
+  useEffect(() => {
+    let filtered = selectedCategory
+      ? allBlogs.filter(blog => blog.category === selectedCategory)
+      : allBlogs;
 
+    setTotalBlogs(filtered.length);
 
+    const startIndex = (currentPage - 1) * pageSize;
+    const paginated = filtered.slice(startIndex, startIndex + pageSize);
+    setBlog(paginated);
+  }, [allBlogs, currentPage, pageSize, selectedCategory]);
 
-    // Page Changer
-    const handlePageChange =(pageNumber)=>{
-        setCurrentPage(pageNumber);
-    }
-
+  // Page change
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
     const handleCategory = (category)=>{
         setSelectedCategory(category)
         setCurrentPage(1);
