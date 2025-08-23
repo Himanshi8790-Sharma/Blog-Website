@@ -8,7 +8,8 @@ function Pagination({  onPageChange,currentPage,totalBlogs,pageSize}) {
     const renderPaginationLinks = ()=>{
         return Array.from({length: totalPages}, (_, i)=>i+1).map((pageNumber)=>
         <li className={pageNumber === currentPage ? "activePagination" : "" } key={pageNumber}>
-           <a href="#" onClick={()=> onPageChange(pageNumber)}> {pageNumber}</a>
+           
+            <Link to="#" onClick={()=> onPageChange(pageNumber)}>{pageNumber}</Link> 
         </li>
         )
     }
