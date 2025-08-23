@@ -11,20 +11,32 @@ function BlogPage() {
     const [selectedCategory,setSelectedCategory]= useState(null);
     const [activeCategory,setactiveCategory]=useState(null);
 
-    useEffect(()=>{
-        async function fetchBlogs() {
-            let url = `/blogsData.json?pages=${currentPage}&limit=${pageSize}`;
+   useEffect(() => {
+  async function fetchBlogs() {
+    try {
+      const response = await fetch('/blogsData.json');
+      if (!response.ok) throw new Error('File not found');
+      
+      const data = await response.json();
 
-            // Filter By category
-            if(selectedCategory){
-                url+= `&category=${selectedCategory}`;
-            }
-            const response = await fetch(url);
-            const data = await response.json();
-            setBlog(data);
-        }
-        fetchBlogs();
-    },[currentPage,pageSize,selectedCategory])
+      // Filter by category
+      let filteredData = selectedCategory
+        ? data.filter(blog => blog.category === selectedCategory)
+        : data;
+
+      // Pagination
+      const startIndex = (currentPage - 1) * pageSize;
+      const paginatedData = filteredData.slice(startIndex, startIndex + pageSize);
+
+      setBlog(paginatedData);
+    } catch (error) {
+      console.error('Error fetching blogs:', error);
+    }
+  }
+
+  fetchBlogs();
+}, [currentPage, pageSize, selectedCategory]);
+
 
 
     // Page Changer
