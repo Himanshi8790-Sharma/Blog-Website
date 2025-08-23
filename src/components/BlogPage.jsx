@@ -22,6 +22,7 @@ function BlogPage() {
         const response = await fetch('/blogsData.json');
         if (!response.ok) throw new Error('File not found');
         const data = await response.json();
+          console.log("Fetched blogs:", data); 
         setAllBlogs(data); // store original blogs for filtering & pagination
       } catch (error) {
         console.error('Error fetching blogs:', error);
