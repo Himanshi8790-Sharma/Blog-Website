@@ -6,6 +6,7 @@ import SideBar from './SideBar';
 
 function BlogPage() {
     const [blog,setBlog] = useState([]);
+    const [totalBlogs, setTotalBlogs] = useState(0);
     const [currentPage, setCurrentPage]= useState(1);
     const pageSize = 12 //Blog per page
     const [selectedCategory,setSelectedCategory]= useState(null);
@@ -24,6 +25,9 @@ function BlogPage() {
         ? data.filter(blog => blog.category === selectedCategory)
         : data;
 
+      // Set total blogs count for pagination
+      setTotalBlogs(filteredData.length);
+        
       // Pagination
       const startIndex = (currentPage - 1) * pageSize;
       const paginatedData = filteredData.slice(startIndex, startIndex + pageSize);
@@ -74,7 +78,7 @@ function BlogPage() {
       <div>
       <Pagination 
       onPageChange={handlePageChange}
-      currentPage={currentPage} blog={blog} pageSize={pageSize} />
+      currentPage={currentPage}  totalBlogs={totalBlogs}  pageSize={pageSize} />
       </div>
     </div>
   )
