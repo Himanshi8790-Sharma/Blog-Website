@@ -4,6 +4,7 @@ import Pagination from './Pagination';
 import CategorySelection from './CategorySelection';
 import SideBar from './SideBar';
 
+
 function BlogPage() {
     const [allBlogs, setAllBlogs] = useState([]);
     const [blog,setBlog] = useState([]);
