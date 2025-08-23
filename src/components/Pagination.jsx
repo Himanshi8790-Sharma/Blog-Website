@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 function Pagination({  onPageChange,currentPage,totalBlogs,pageSize}) {
 
-    const totalPages = Math.ceil(totalBlogs.length / pageSize);
+    const totalPages = Math.ceil(totalBlogs / pageSize);
     
     const renderPaginationLinks = ()=>{
         return Array.from({length: totalPages}, (_, i)=>i+1).map((pageNumber)=>
